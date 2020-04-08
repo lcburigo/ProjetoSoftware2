@@ -36,7 +36,7 @@ namespace QuickBuy.Web
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
-            // conexao
+            // configuração de conexao banco de dados mysql
             services.AddDbContext<QuickBuyContexto>(option =>
                                                         option.UseLazyLoadingProxies()
                                                         .UseMySql(connectionString,
