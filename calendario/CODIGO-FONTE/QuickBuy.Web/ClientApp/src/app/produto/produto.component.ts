@@ -9,8 +9,8 @@ import { ProdutoServico } from "../servicos/produto/produto.servico";
 })
 export class ProdutoComponent implements OnInit {
 
-   public produto: Produto;
-
+    public produto: Produto;
+    public ativar_spinner: boolean;
    public arquivoSelecionado: File;
 
     constructor(private produtoServico: ProdutoServico) {
@@ -23,10 +23,13 @@ export class ProdutoComponent implements OnInit {
 
     public inputChange(files: FileList) {
         this.arquivoSelecionado = files.item(0);
+        this.ativar_spinner = true;
         this.produtoServico.enviarArquivo(this.arquivoSelecionado)
             .subscribe(
-                retorno => {
-                    console.log(retorno);
+                nomeArquivo => {
+                    this.produto.nomeArquivo = nomeArquivo;
+                    console.log(nomeArquivo);
+                    this.ativar_spinner = false;
                 },
                 e => {
                     console.log(e.error);

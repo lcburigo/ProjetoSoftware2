@@ -17,24 +17,16 @@ namespace QuickBuy.Web.Controllers
     public class ProdutoController : Controller
     {
         private readonly IProdutoRepositorio _produtoRepositorio;
-
-
-        public ProdutoController(IProdutoRepositorio produtoRepositorio)
+        private IHttpContextAccessor _httpContextAccessor;
+        private IHostingEnvironment _hostingEnvironment;
+        public ProdutoController(IProdutoRepositorio produtoRepositorio, 
+                                     IHttpContextAccessor httpContextAccessor, IHostingEnvironment hostingEnvironment)
         {
             _produtoRepositorio = produtoRepositorio;
-        }
-
-        private IHttpContextAccessor _httpContextAccessor;
-        private IHostingEnvironment _hostingEnviroment;
-        public ProdutoController(IProdutoRepositorio produtoRepositorio, 
-                                    IHttpContextAccessor httpContextAccessor, 
-                                         IHostingEnvironment hostingEnvironment)
-        {
-            _produtoRepositorio  = produtoRepositorio;
             _httpContextAccessor = httpContextAccessor;
-            _hostingEnviroment   = hostingEnvironment;
-
+            _hostingEnvironment = hostingEnvironment;
         }
+
 
         [HttpGet]
         public IActionResult Get()
@@ -67,21 +59,20 @@ namespace QuickBuy.Web.Controllers
         {
             try
             {
-                var formFile    = _httpContextAccessor.HttpContext.Request.Form.Files["arquivoEnviado"];
+                var formFile = _httpContextAccessor.HttpContext.Request.Form.Files["arquivoEnviado"];
                 var nomeArquivo = formFile.FileName;
                 var extensao = nomeArquivo.Split(".").Last();
-                var arrayNomeCompacto = Path.GetFileNameWithoutExtension(nomeArquivo).Take(10).ToArray();
-                var novoNomeArquivo = new string(arrayNomeCompacto).Replace(" ", "-") + "." + extensao;
-                var pastaArquivos = _hostingEnviroment.WebRootPath + "\\arquivos\\";
+                string novoNomeArquivo = GerarNovoNomeArquivo(nomeArquivo);
+                var pastaArquivos = _hostingEnvironment.WebRootPath + "\\arquivos\\";
                 var nomeCompleto = pastaArquivos + novoNomeArquivo;
 
-                using(var streamArquivo = new FileStream(nomeCompleto, FileMode.Create))
+                using (var streamArquivo = new FileStream(nomeCompleto, FileMode.Create))
                 {
                     formFile.CopyTo(streamArquivo);
                 }
 
-                return Ok("Arquivo enviado com sucesso");
-                
+                return Json(novoNomeArquivo);
+
             }
             catch (Exception ex)
             {
@@ -89,5 +80,13 @@ namespace QuickBuy.Web.Controllers
             }
         }
 
+        private static string GerarNovoNomeArquivo(string nomeArquivo)
+        {
+            var arrayNomeCompacto = Path.GetFileNameWithoutExtension(nomeArquivo).Take(10).ToArray();
+            var novoNomeArquivo = new string(arrayNomeCompacto).Replace(" ", "-");
+            novoNomeArquivo = $"{novoNomeArquivo}_{DateTime.Now.Year}_{DateTime.Now.Month}" +
+                                               $"_{DateTime.Now.Day}_{DateTime.Now.Hour}_{DateTime.Now.Minute}_{DateTime.Now.Second}";
+            return novoNomeArquivo;
+        }
     }
 }
