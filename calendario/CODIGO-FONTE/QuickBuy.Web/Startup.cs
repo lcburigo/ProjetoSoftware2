@@ -35,7 +35,7 @@ namespace QuickBuy.Web
             var connectionString =  Configuration["ConnectionString:QuickBuyDB"];
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
             // conexao
             services.AddDbContext<QuickBuyContexto>(option =>
                                                         option.UseLazyLoadingProxies()
