@@ -18,7 +18,7 @@ namespace QuickBuy.Dominio.Entidades
                 AdicionarCritica("Atenção - Nome inválido");
 
             if (string.IsNullOrEmpty(Descricao))
-                AdicionarCritica("Atenção - Descrição de produto inválido");
+                AdicionarCritica("Atenção - Descrição de produto inválida");
 
             if (preco <= 0)
                 AdicionarCritica("Atenção - Preço inválido");

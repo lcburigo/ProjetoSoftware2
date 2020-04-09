@@ -18,13 +18,18 @@ namespace QuickBuy.Dominio.Entidades
             MensagemValidacao.Clear();
         }
 
+        public string ObterMensagensValidacao()
+        {
+            return string.Join("\n", MensagemValidacao);
+        }
+
         protected void AdicionarCritica(string mensagem)
         {
             MensagemValidacao.Add(mensagem);
         }
 
         public abstract void Validate();
-        protected bool EhValido
+        public bool EhValido
         {
             get { return !MensagemValidacao.Any(); }
         }

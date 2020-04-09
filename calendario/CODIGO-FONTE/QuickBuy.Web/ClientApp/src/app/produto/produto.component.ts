@@ -11,7 +11,8 @@ export class ProdutoComponent implements OnInit {
 
     public produto: Produto;
     public ativar_spinner: boolean;
-   public arquivoSelecionado: File;
+    public arquivoSelecionado: File;
+    public mensagem: string;
 
     constructor(private produtoServico: ProdutoServico) {
         this.produto = new Produto();
@@ -23,30 +24,43 @@ export class ProdutoComponent implements OnInit {
 
     public inputChange(files: FileList) {
         this.arquivoSelecionado = files.item(0);
-        this.ativar_spinner = true;
+        this.ativarEspera();
         this.produtoServico.enviarArquivo(this.arquivoSelecionado)
             .subscribe(
                 nomeArquivo => {
                     this.produto.nomeArquivo = nomeArquivo;
                     console.log(nomeArquivo);
-                    this.ativar_spinner = false;
+                    this.desativarEspera();
                 },
                 e => {
                     console.log(e.error);
+                    this.desativarEspera();
                 });
     }
    
     public cadastrar() {
-        //this.produto
-     /*   this.produtoServico.cadastrar(this.produto)
+        debugger;
+        this.ativarEspera();
+        this.produtoServico.cadastrar(this.produto)
             .subscribe(
                 produtoJson => {
                     console.log(produtoJson);
+                    this.desativarEspera();
                 },
                 e => {
                     console.log(e.error);
+                    this.mensagem = e.error;
+                    this.desativarEspera();
                 }
-            );*/
+            );
+    }
+
+    public ativarEspera() {
+        this.ativar_spinner = true;
+    }
+
+    public desativarEspera() {
+        this.ativar_spinner = false;
     }
 
 
