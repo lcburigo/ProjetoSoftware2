@@ -25,7 +25,8 @@ export class ProdutoServico implements OnInit {
     }
 
     public cadastrar(produto: Produto): Observable<Produto> {
-        return this.http.post<Produto>("https://localhost:44363/" + "api/produto/cadastrar",
+        debugger;
+        return this.http.post<Produto>("https://localhost:44363/" + "api/produto",
                                        JSON.stringify(produto) ,{ headers: this.headers });
     }
 
