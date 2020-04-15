@@ -20,11 +20,14 @@ export class ProdutoComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        debugger;
         var produtoSession = sessionStorage.getItem('produtoSession');
         if (produtoSession) {
             this.produto = JSON.parse(produtoSession);
         }
-        this.produto = new Produto();
+        else {
+            this.produto = new Produto();
+        }
     }
 
     public inputChange(files: FileList) {
