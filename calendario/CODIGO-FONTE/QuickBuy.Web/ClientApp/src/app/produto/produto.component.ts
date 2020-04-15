@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { Produto } from "../modelo/produto";
 import { ProdutoServico } from "../servicos/produto/produto.servico";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-produto",
@@ -14,11 +15,15 @@ export class ProdutoComponent implements OnInit {
     public arquivoSelecionado: File;
     public mensagem: string;
 
-    constructor(private produtoServico: ProdutoServico) {
+    constructor(private produtoServico: ProdutoServico, private router: Router) {
         this.produto = new Produto();
     }
 
     ngOnInit(): void {
+        var produtoSession = sessionStorage.getItem('produtoSession');
+        if (produtoSession) {
+            this.produto = JSON.parse(produtoSession);
+        }
         this.produto = new Produto();
     }
 
@@ -46,6 +51,7 @@ export class ProdutoComponent implements OnInit {
                 produtoJson => {
                     console.log(produtoJson);
                     this.desativarEspera();
+                    this.router.navigate(['/pesquisar-produto']);
                 },
                 e => {
                     console.log(e.error);

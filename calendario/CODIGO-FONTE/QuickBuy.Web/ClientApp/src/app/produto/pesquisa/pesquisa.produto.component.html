@@ -1,10 +1,51 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<h1 class="h4 titulo mb-2">Pesquisa de Produtos</h1>
+<p *ngIf="!produtos">Carregando Produtos...</p>
 
-</body>
-</html>
+<button class="btn btn-primary mb-2" (click)="adicionarProduto()">Adicionar Produtos</button>
+
+<table class="table table-hover" *ngIf="produtos">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Preço</th>
+      <th>Imagem</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of produtos">
+      <td>{{p.nome}}</td>
+      <td style="width:50%; height:10%">{{p.descricao}}</td>
+      <td style="width:10%; height:10%">{{p.preco}}</td>
+      <td><img src="../../../../arquivos/{{p.nomeArquivo}}" style="width:40%; height:10%" /></td>
+      <td><button class="btn btn-success btn-sm" (click)="editarProduto(p)">Editar</button></td>
+      <td><button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Deletar</button></td>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Atenção</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Deseja realmente deletar o produto selecionado?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deletarProduto(p)">Sim</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </tr>
+  </tbody>
+
+</table>
