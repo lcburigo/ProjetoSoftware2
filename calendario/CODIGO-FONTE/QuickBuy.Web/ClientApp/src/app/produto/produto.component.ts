@@ -47,7 +47,6 @@ export class ProdutoComponent implements OnInit {
     }
    
     public cadastrar() {
-        debugger;
         this.ativarEspera();
         this.produtoServico.cadastrar(this.produto)
             .subscribe(
