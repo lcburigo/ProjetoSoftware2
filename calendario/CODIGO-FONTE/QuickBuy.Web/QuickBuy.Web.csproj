@@ -21,8 +21,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="arquivos\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="arquivos\**" />
+    <EmbeddedResource Remove="arquivos\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="arquivos\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -36,6 +40,7 @@
     <None Remove="ClientApp\src\app\usuario\cadastro\cadastro.usuario.component.css" />
     <None Remove="ClientApp\src\app\usuario\cadastro\cadastro.usuario.component.ts" />
     <None Remove="ClientApp\src\app\usuario\login\login.component.ts" />
+    <None Remove="ClientApp\src\assets\img\Nova-guia-_2020_4_15_14_22_9.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +66,10 @@
     <Content Update="config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\assets\lojaImg\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

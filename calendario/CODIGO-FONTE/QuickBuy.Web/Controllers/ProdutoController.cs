@@ -39,6 +39,7 @@ namespace QuickBuy.Web.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
         [HttpPost]
         public IActionResult Post([FromBody]Produto produto)
         {
@@ -90,14 +91,14 @@ namespace QuickBuy.Web.Controllers
                 var nomeArquivo = formFile.FileName;
                 var extensao = nomeArquivo.Split(".").Last();
                 string novoNomeArquivo = GerarNovoNomeArquivo(nomeArquivo);
-                var pastaArquivos = _hostingEnvironment.WebRootPath + "\\arquivos\\";
-                var nomeCompleto = pastaArquivos + novoNomeArquivo;
-
+                var pastaArquivos = _hostingEnvironment.WebRootPath + "\\arquivos\\";             
+                var nomeCompleto = pastaArquivos + novoNomeArquivo + "." + extensao;
+                novoNomeArquivo = novoNomeArquivo + "." + extensao;
                 using (var streamArquivo = new FileStream(nomeCompleto, FileMode.Create))
                 {
                     formFile.CopyTo(streamArquivo);
                 }
-
+                
                 return Json(novoNomeArquivo);
 
             }
