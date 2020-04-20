@@ -28,10 +28,14 @@
        }"
        [(ngModel)]="produto.descricao"
        #descricao="ngModel"
-       required />
+       required
+       minlength="50"/>
 <div class="invalid-feedback mb-2" *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
   <div *ngIf="descricao.errors.required">
     Descrição do produto é de preenchimento obrigatório
+  </div>
+  <div *ngIf="descricao.errors.minlength">
+    Campo deve ter no minimo 50 caracteres
   </div>
 </div>
 
@@ -58,13 +62,13 @@
 <div class="input-group">
   <div class="custom-file col-md-4 mb-2">
     <input type="file" class="custom-file-input" id="inputFile"/>
-    <input type="file" class="custom-file-input" id="inputFile"(change)="inputChange($event.target.files)"/>
+    <input type="file" class="custom-file-input" id="inputFile"/>
     <label for="inputFile" class="custom-file-label">Escolha uma foto</label>
   </div>
 </div>
 
 <div class="form-inline">
-  <button class="btn btn-primary" style="margin-right:4px;" (click)=  "cadastrar()" [disabled]="ativar_spinner">
+  <button class="btn btn-primary" style="margin-right:4px;" (click)=  "cadastrar($event.target.files)" [disabled]="ativar_spinner">
     <span class="spinner-border spinner-border-sm" *ngIf="ativar_spinner"></span>
     Cadastrar
   </button>
