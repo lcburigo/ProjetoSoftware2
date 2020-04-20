@@ -14,6 +14,9 @@ import { UsuarioServico } from './servicos/usuario/usuario.servico';
 import { CadastroUsuarioComponet } from './usuario/cadastro/cadastro.usuario.component';
 import { ProdutoServico } from './servicos/produto/produto.servico';
 import { PesquisaProdutoComponet } from './produto/pesquisa/pesquisa.produto.component';
+import { LojaPesquisaComponent } from './loja/pesquisa/loja.pesquisa.component';
+import { TruncateModule } from 'ng2-truncate';
+import { LojaProdutoComponent } from './loja/produto/loja.produto.component';
 
 @NgModule({
   declarations: [
@@ -23,18 +26,22 @@ import { PesquisaProdutoComponet } from './produto/pesquisa/pesquisa.produto.com
         ProdutoComponent,
         LoginComponent,
         CadastroUsuarioComponet,
-        PesquisaProdutoComponet
+        PesquisaProdutoComponet,
+        LojaPesquisaComponent,
+        LojaProdutoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    TruncateModule,
     RouterModule.forRoot([
         { path: '', component: HomeComponent, pathMatch: 'full' },
         { path: 'produto', component: ProdutoComponent},
         { path: 'entrar', component: LoginComponent },
         { path: "novo-usuario", component: CadastroUsuarioComponet },
-        { path: "pesquisar-produto", component: PesquisaProdutoComponet }
+        { path: "pesquisar-produto", component: PesquisaProdutoComponet },
+        { path: "loja-produto", component: LojaProdutoComponent }
     ])
     ],
     providers: [UsuarioServico, ProdutoServico],

@@ -20,7 +20,6 @@ export class ProdutoComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        debugger;
         var produtoSession = sessionStorage.getItem('produtoSession');
         if (produtoSession) {
             this.produto = JSON.parse(produtoSession);
@@ -31,6 +30,7 @@ export class ProdutoComponent implements OnInit {
     }
 
     public inputChange(files: FileList) {
+        debugger;
         this.arquivoSelecionado = files.item(0);
         this.ativarEspera();
         this.produtoServico.enviarArquivo(this.arquivoSelecionado)
@@ -46,12 +46,13 @@ export class ProdutoComponent implements OnInit {
                 });
     }
    
-    public cadastrar() {
+    public cadastrar(files: FileList) {
         this.ativarEspera();
         this.produtoServico.cadastrar(this.produto)
             .subscribe(
                 produtoJson => {
                     console.log(produtoJson);
+                    if (files != null) { this.inputChange(files)}
                     this.desativarEspera();
                     this.router.navigate(['/pesquisar-produto']);
                 },
