@@ -30,7 +30,6 @@ export class ProdutoComponent implements OnInit {
     }
 
     public inputChange(files: FileList) {
-        debugger;
         this.arquivoSelecionado = files.item(0);
         this.ativarEspera();
         this.produtoServico.enviarArquivo(this.arquivoSelecionado)
@@ -46,13 +45,12 @@ export class ProdutoComponent implements OnInit {
                 });
     }
    
-    public cadastrar(files: FileList) {
+    public cadastrar() {
         this.ativarEspera();
         this.produtoServico.cadastrar(this.produto)
             .subscribe(
                 produtoJson => {
                     console.log(produtoJson);
-                    if (files != null) { this.inputChange(files)}
                     this.desativarEspera();
                     this.router.navigate(['/pesquisar-produto']);
                 },

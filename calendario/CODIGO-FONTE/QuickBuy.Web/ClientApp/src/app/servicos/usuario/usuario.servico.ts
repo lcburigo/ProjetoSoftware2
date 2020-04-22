@@ -44,18 +44,10 @@ export class UsuarioServico {
         this.baseURL = getBaseUrl;
     }
     public verificaUsuario(usuario: Usuario): Observable<Usuario> {
-        const headers = new HttpHeaders().set('content-type', 'application/json');
-        var body = {
-            email: usuario.email,
-            senha: usuario.senha
-        }
-
-        //return this.http.post<Usuario>(this.baseURL + "api/usuario/VerificarUsuario", body, { headers });
-        return this.http.post<Usuario>("https://localhost:44363/" + "api/usuario/VerificarUsuario", body, { headers });
+        return this.http.post<Usuario>(this.baseURL + "api/usuario/VerificarUsuario", JSON.stringify(usuario), { headers: this.headers });
     }
 
     public cadastrarUsuario(usuario: Usuario): Observable<Usuario> {
-        //return this.http.post<Usuario>(this.baseURL + "api/usuario", body, { headers });
-        return this.http.post<Usuario>("https://localhost:44363/" + "api/usuario", JSON.stringify(usuario), { headers: this.headers });
+        return this.http.post<Usuario>(this.baseURL + "api/usuario",JSON.stringify(usuario), { headers: this.headers });
     }
 }

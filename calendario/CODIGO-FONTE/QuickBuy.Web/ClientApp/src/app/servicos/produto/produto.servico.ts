@@ -12,12 +12,11 @@ export class ProdutoServico implements OnInit {
         this.produtos = [];
     }
 
-    private _baseUrl: string;
+    private baseURL: string;
     public produtos: Produto[];
 
-    //constructor(private http: HttpClient, @Inject('Base_URL') baseUrl: string) {
-    constructor(private http: HttpClient) {
-        //this._baseUrl = baseUrl;
+    constructor(private http: HttpClient, @Inject('BASE_URL') getBaseUrl: string) {
+        this.baseURL = getBaseUrl;
     }
 
     get headers(): HttpHeaders {
@@ -25,33 +24,32 @@ export class ProdutoServico implements OnInit {
     }
 
     public cadastrar(produto: Produto): Observable<Produto> {
-        return this.http.post<Produto>("https://localhost:44363/" + "api/produto",
+        return this.http.post<Produto>(this.baseURL + "api/produto",
                                        JSON.stringify(produto) ,{ headers: this.headers });
     }
 
     public salvar(produto: Produto): Observable<Produto> {
-        return this.http.post<Produto>("https://localhost:44363/" + "api/produto/salvar",
+        return this.http.post<Produto>(this.baseURL+ "api/produto/salvar",
             JSON.stringify(produto), { headers: this.headers });
     }
 
     public deletar(produto: Produto): Observable<Produto[]> {
-        return this.http.post<Produto[]>("https://localhost:44363/" + "api/produto/deletar",
+        return this.http.post<Produto[]>(this.baseURL + "api/produto/deletar",
             JSON.stringify(produto), { headers: this.headers });
     }
 
     public obterTodosProdutos(): Observable<Produto[]> {
-        return this.http.get<Produto[]>("https://localhost:44363/" + "api/produto");
+        return this.http.get<Produto[]>(this.baseURL + "api/produto");
     }
 
     public obterProduto(produtoId: number): Observable<Produto> {
-        return this.http.get<Produto>("https://localhost:44363/" + "api/produto");
+        return this.http.get<Produto>(this.baseURL + "api/produto");
     }
-
 
     enviarArquivo(arquivoSelecionado: File): Observable<string> {
         const formData: FormData = new FormData();
         formData.append("arquivoEnviado", arquivoSelecionado, arquivoSelecionado.name);
-        return this.http.post<string>("https://localhost:44363/" + "api/produto/enviarArquivo", formData);
+        return this.http.post<string>(this.baseURL + "api/produto/enviarArquivo", formData);
             
     }
 
