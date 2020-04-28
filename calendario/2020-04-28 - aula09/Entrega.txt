@@ -1,0 +1,4 @@
+Foi implementado nesta semana as telas para compra de produtos com os seus cruds:
+Criar pedido, editar pedido, excluir pedido.
+Foi implementado o controle de rotas para validar se o usuário é um administrador ou um cliente e assim disponibilizar
+as funcionalidade para cada qual.
