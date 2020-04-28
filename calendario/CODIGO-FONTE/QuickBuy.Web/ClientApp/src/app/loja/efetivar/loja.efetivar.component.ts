@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Produto } from '../../modelo/produto';
 import { LojaCarrrinhoCompras } from '../carrinho-compras/loja.carrinho.compras';
+import { Pedido } from '../../modelo/pedido';
 
 @Component({
     selector: "loja-efetivar",
@@ -11,10 +12,12 @@ import { LojaCarrrinhoCompras } from '../carrinho-compras/loja.carrinho.compras'
 export class LojaEfetivarComponent implements OnInit {
     public carrinhoCompras: LojaCarrrinhoCompras;
     public produtos: Produto[];
+    public total: number;
 
     ngOnInit(): void {
         this.carrinhoCompras = new LojaCarrrinhoCompras();
         this.produtos = this.carrinhoCompras.obterProdutos();
+        this.atualizarTotal();
     }
 
     public atualizarPreco(produto: Produto, quantidade: number) {
@@ -27,12 +30,22 @@ export class LojaEfetivarComponent implements OnInit {
         }
         produto.preco = produto.precoOriginal * quantidade;
         this.carrinhoCompras.atualizar(this.produtos);
+        this.atualizarTotal();
     }
 
     public remover(produto: Produto) {
-        debugger;
         this.carrinhoCompras.removerProduto(produto);
         this.produtos = this.carrinhoCompras.obterProdutos();
+        this.atualizarTotal();
+    }
+
+    public atualizarTotal() {
+        this.total = this.produtos.reduce((acc, produto) => acc + produto.preco, 0);
+    }
+
+    public efetivarCompra() {
+        let pedido = new Pedido();
+
     }
 
 }
