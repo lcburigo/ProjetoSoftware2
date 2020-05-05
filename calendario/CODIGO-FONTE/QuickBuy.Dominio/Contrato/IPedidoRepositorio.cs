@@ -7,6 +7,6 @@ namespace QuickBuy.Dominio.Contrato
 {
     public interface IPedidoRepositorio : IBaseRepositorio<Pedido>
     {
-
+        List<Pedido> ObterPedidos();
     }
 }

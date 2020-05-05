@@ -6,16 +6,16 @@ export class Pedido{
     public dataPedido: Date;
     public usuarioId: number;
     public dataPrevisaoEntrega: Date;
-    public cep: Date;
+    public cep: string;
     public estado: string;
     public cidade: string;
     public enderecoCompleto: string;
     public numeroEndereco: string;
-    public formaPagamento: number;
-
+    public formaPagamentoId: number;
     public itensPedido: ItemPedido[];
 
     constructor() {
+        this.dataPedido = new Date();
         this.itensPedido = [];
     }
 }

@@ -16,7 +16,7 @@ namespace QuickBuy.Web.Controllers
     [Route ("api/[Controller]")]
     public class ProdutoController : Controller
     {
-        private readonly IProdutoRepositorio _produtoRepositorio;
+        private readonly IProdutoRepositorio _produtoRepositorio;       
         private IHttpContextAccessor _httpContextAccessor;
         private IHostingEnvironment _hostingEnvironment;
         public ProdutoController(IProdutoRepositorio produtoRepositorio, 
@@ -34,6 +34,7 @@ namespace QuickBuy.Web.Controllers
             try
             {
                 return Json(_produtoRepositorio.ObterTodos());
+                //return Json(_produtoRepositorio.ObterProdutos(3, 10));
             }catch(Exception ex)
             {
                 return BadRequest(ex.ToString());

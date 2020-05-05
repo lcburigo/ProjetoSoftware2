@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     }
 
     entrar() {
+  
         this.ativar_spinner = true;
         this.usuarioServico.verificaUsuario(this.usuario)
             .subscribe(
