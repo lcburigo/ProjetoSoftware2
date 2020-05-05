@@ -8,17 +8,19 @@ import { PedidoServico } from '../../servicos/pedido/pedido.servico';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: "loja-efetivar",
-    templateUrl: "./loja.efetivar.component.html",
-    styleUrls: ["./loja.efetivar.component.css"]
+    selector: "dados-compra-entrega",
+    templateUrl: "./loja.dados.efetivar.component.html",
+    styleUrls: ["./loja.dados.efetivar.component.css"]
 })
 
-export class LojaEfetivarComponent implements OnInit {
+export class LojaDadosEfetivarComponent implements OnInit {
     public carrinhoCompras: LojaCarrrinhoCompras;
     public produtos: Produto[];
+    public pedido: Pedido;
     public total: number;
 
     ngOnInit(): void {
+        this.pedido = new Pedido();
         this.carrinhoCompras = new LojaCarrrinhoCompras();
         this.produtos = this.carrinhoCompras.obterProdutos();
         this.atualizarTotal();
@@ -29,7 +31,7 @@ export class LojaEfetivarComponent implements OnInit {
     }
 
     public atualizarPreco(produto: Produto, quantidade: number) {
-        
+
         if (!produto.precoOriginal) {
             produto.precoOriginal = produto.preco;
         }
@@ -53,8 +55,7 @@ export class LojaEfetivarComponent implements OnInit {
     }
 
     public efetivarCompra() {
-        this.router.navigate(["/dados-compra-entrega"]);
-        /*
+
         this.pedidoServico.efetivarCompra(this.criarPedido())
             .subscribe(
                 pedidoId => {
@@ -68,7 +69,6 @@ export class LojaEfetivarComponent implements OnInit {
                 e => {
                     console.log(e.error);
                 });
-                */
     }
 
     public criarPedido(): Pedido {
@@ -87,9 +87,10 @@ export class LojaEfetivarComponent implements OnInit {
         for (let produto of this.produtos) {
             let itemPedido = new ItemPedido();
             itemPedido.produtoId = produto.id;
-            
+
             if (!produto.quantidade) {
                 produto.quantidade = 1;
+                itemPedido.quantidade = produto.quantidade;
             }
             else {
                 itemPedido.quantidade = produto.quantidade;

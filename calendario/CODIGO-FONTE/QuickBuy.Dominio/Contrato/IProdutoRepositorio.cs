@@ -7,5 +7,6 @@ namespace QuickBuy.Dominio.Contrato
 {
     public interface IProdutoRepositorio : IBaseRepositorio<Produto>
     {
+        List<Produto> ObterProdutos(int faixaInicial, int faixaFinal);
     }
 }

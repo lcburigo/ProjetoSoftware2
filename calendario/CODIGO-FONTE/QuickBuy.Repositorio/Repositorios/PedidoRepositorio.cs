@@ -12,5 +12,10 @@ namespace QuickBuy.Repositorio.Repositorios
         {
 
         }
+
+        public List<Pedido> ObterPedidos()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
