@@ -7,6 +7,7 @@ namespace QuickBuy.Dominio.Entidades
         public int Id { get; set; }
         public int ProdutoId { get; set; }
         public int Quantidade { get; set; }
+        public decimal preco { get; set; }
 
         public override void Validate()
         {
@@ -15,6 +16,9 @@ namespace QuickBuy.Dominio.Entidades
             
             if (Quantidade == 0)
                 AdicionarCritica("Quantidade não informada");
+
+            if (preco <= 0)
+                AdicionarCritica("Atenção - Preço inválido");
         }
     }
 }

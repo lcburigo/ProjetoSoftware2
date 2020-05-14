@@ -28,6 +28,12 @@ namespace QuickBuy.Web.Controllers
                 {
                     return BadRequest("Usuario já cadastrado no sistema");
                 }
+
+                usuario.Validate();
+                if (!usuario.EhValido)
+                {
+                    return BadRequest(usuario.ObterMensagensValidacao());
+                }
                 _usuarioRepositorio.Adicionar(usuario);
 
                 return Ok();

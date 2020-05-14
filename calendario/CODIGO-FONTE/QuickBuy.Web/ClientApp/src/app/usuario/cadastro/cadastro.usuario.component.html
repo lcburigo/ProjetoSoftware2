@@ -51,10 +51,14 @@
             'is-valid':nome.valid && (nome.touched || nome.dirty)
            }"
            [(ngModel)]="usuario.nome"
+           minlength="1"
            required />
 
-    <div class="invalid-feedback mb-2" *ngIf="nome.invalid && (nome.touched || nome.dirty)">
-      <div *ngIf="nome.errors.required">
+    <div class="invalid-feedback mb-2" *ngIf="nome.invalid && (nome.touched || nome.dirty || usuario.nome == '')">
+      <div *ngIf="nome.errors.required || usuario.nome == ''">
+        Nome é de preenchimento obrigatório!
+      </div>
+      <div *ngIf="nome.errors.minlength">
         Nome é de preenchimento obrigatório!
       </div>
     </div>

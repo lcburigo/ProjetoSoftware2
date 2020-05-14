@@ -10,10 +10,15 @@
        }"
        [(ngModel)]="produto.nome"
        #nome="ngModel"
+       maxlength="50"
+       minlength="10"
        required />
-<div class="invalid-feedback mb-2" *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+<div class="invalid-feedback mb-2" *ngIf="nome.invalid && (nome.dirty || nome.touched || produto.nome == '')">
   <div *ngIf="nome.errors.required">
     Nome do produto é de preenchimento obrigatório
+  </div>
+  <div *ngIf="nome.errors.minlength">
+    Campo deve ter no minimo 10 caracteres
   </div>
 </div>
 
@@ -29,8 +34,9 @@
        [(ngModel)]="produto.descricao"
        #descricao="ngModel"
        required
-       minlength="50"/>
-<div class="invalid-feedback mb-2" *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)">
+       minlength="50"
+       maxlength="400"/>
+<div class="invalid-feedback mb-2" *ngIf="descricao.invalid && (descricao.dirty || descricao.touched || produto.descricao == '')">
   <div *ngIf="descricao.errors.required">
     Descrição do produto é de preenchimento obrigatório
   </div>
@@ -51,30 +57,61 @@
        }"
        [(ngModel)]="produto.preco"
        #preco="ngModel"
-       required/>
+       pattern= [1-9][0-9]*
+       required />
 
-<div class="invalid-feedback mb-2" *ngIf="preco.invalid && (preco.dirty || preco.touched)">
+<div class="invalid-feedback mb-2" *ngIf="preco.invalid && (preco.dirty || preco.touched || produto.preco == 0)">
   <div *ngIf="preco.errors.required">
     Preço do produto é de preenchimento obrigatório
   </div>
+  <div *ngIf="preco.invalid">
+    Campo tem que ser maior que zero
+  </div>
 </div>
+
+
+<label for="inputQuantidade" class="sr-only">Quantidade</label>
+<input type="number"
+       id="inputQuantidade"
+       name="quantidadeProduto"
+       placeholder="Quantidade"
+       class="form-control mb-2 col-md-2"
+       [ngClass]="{
+          'is-invalid': quantidade.invalid && (quantidade.dirty || quantidade.touched),
+          'is-valid': quantidade.valid && (quantidade.dirty || quantidade.touched)
+       }"
+       [(ngModel)]="produto.qtdArmazem"
+       #quantidade="ngModel"
+       pattern= [1-9][0-9]*
+       required />
+
+<div class="invalid-feedback mb-2" *ngIf="quantidade.invalid && (quantidade.dirty || quantidade.touched || produto.qtArmazem == 0)">
+  <div *ngIf="quantidade.errors.required">
+    Quantidade do produto é de preenchimento obrigatório
+  </div>
+  <div *ngIf="quantidade.invalid">
+    Campo tem que ser maior que zero
+  </div>
+</div>
+
+
 
 <div class="input-group">
   <div class="custom-file col-md-4 mb-2">
-    <input type="file" class="custom-file-input" id="inputFile" (change)= "inputChange($event.target.files)"/>
+    <input type="file" class="custom-file-input" id="inputFile" (change)="inputChange($event.target.files)" />
     <label for="inputFile" class="custom-file-label">Escolha uma foto</label>
   </div>
 </div>
 
 <div class="form-inline">
-  <button class="btn btn-primary" style="margin-right:4px;" (click)=  "cadastrar()" [disabled]="ativar_spinner">
+  <button class="btn btn-primary mb-2" style="margin-right:4px;" (click)="cadastrar()" [disabled]="ativar_spinner">
     <span class="spinner-border spinner-border-sm" *ngIf="ativar_spinner"></span>
     Cadastrar
   </button>
-  <button class="btn btn-secondary " [routerLink]="['/pesquisar-produto']">Cancelar</button>
+  <button class="btn btn-secondary mb-2 " [routerLink]="['/pesquisar-produto']">Cancelar</button>
 </div>
 
-<div class="alert-danger col-md-4 mb-2" *ngIf="mensagem">
+<div class="alert alert-danger col-md-4 mb-2" *ngIf="mensagem">
   {{mensagem}}
 </div>
 
