@@ -16,7 +16,7 @@ export class CadastroUsuarioComponet implements OnInit {
 
     private _usuario: Usuario;
     constructor(public usuarioServico: UsuarioServico) {
-
+        
     }
 
     ngOnInit(): void {
@@ -32,19 +32,61 @@ export class CadastroUsuarioComponet implements OnInit {
 
     public cadastrar() {
         this.ativar_spinner = true;
-            ;
-        this.usuarioServico.cadastrarUsuario(this.usuario)
-            .subscribe(
-                usuarioJson => {
-                    this.usuarioCadastrado = true;
-                    this.mensagem = "";
-                    this.ativar_spinner = false;
-                },
-                e => {
-                    this.mensagem = e.error;
-                    this.ativar_spinner = false;
-                }
-            );
+        this.mensagem = "";
+        if (this.validaCampos()) {
+            this.usuarioServico.cadastrarUsuario(this.usuario)
+                .subscribe(
+                    usuarioJson => {
+                        this.usuarioCadastrado = true;    
+                    },
+                    e => {
+                        this.mensagem = e.error;
+                    }
+                );
+        }
+        this.ativar_spinner = false;
+    }
+
+    public validaCampos(): boolean {
+        var email     = this.usuario.email;
+        var senha     = this.usuario.senha;
+        var nome      = this.usuario.nome;
+        var sobreNome = this.usuario.sobreNome;
+
+        if (!email) {
+            email = email.trim();
+        }
+
+        if (!email) {
+            this.mensagem = "Email iválido";
+            return false
+        }
+
+        if (senha != null) {
+            senha = senha.trim();
+        }
+
+        if (!senha) {
+            this.mensagem = "Senha inválida";
+            return false;
+        }
+
+        if (nome != null) {
+            nome = nome.trim();
+        }
+        if (!nome) {
+            this.mensagem = "Nome inválido";
+            return false;
+        }
+        if (sobreNome != null) {
+            sobreNome = sobreNome.trim();
+        }
+
+        if (!sobreNome) {
+            this.mensagem = "Sobre Nome inválido";
+            return false;
+        }
+        return true;
     }
     
 

@@ -11,9 +11,13 @@ namespace QuickBuy.Dominio.Entidades
         public string Descricao { get; set; }
         public decimal preco { get; set; }
         public string NomeArquivo { get; set; }
+        public int qtdArmazem { get; set; }
 
         public override void Validate()
         {
+            if (string.IsNullOrEmpty(Nome.Trim()))
+                AdicionarCritica("Atenção - Nome inválido");
+
             if (string.IsNullOrEmpty(Nome))
                 AdicionarCritica("Atenção - Nome inválido");
 
@@ -22,6 +26,9 @@ namespace QuickBuy.Dominio.Entidades
 
             if (preco <= 0)
                 AdicionarCritica("Atenção - Preço inválido");
+
+            if (qtdArmazem <= 0)
+                AdicionarCritica("Atenção - Quantidade inválida");
 
         }
     }

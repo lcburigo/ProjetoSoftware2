@@ -19,8 +19,19 @@ namespace QuickBuy.Dominio.Entidades
             if (string.IsNullOrEmpty(Email))
                 AdicionarCritica("Email inválido");
 
+            if (string.IsNullOrEmpty(Senha.Trim()))
+                AdicionarCritica("Atenção - Senha inválida");
+
             if (string.IsNullOrEmpty(Senha))
                 AdicionarCritica("Senha não foi informada");
+
+            if (string.IsNullOrEmpty(Nome))
+                AdicionarCritica("Nome não informado");
+
+            if (string.IsNullOrEmpty(SobreNome))
+                AdicionarCritica("SobreNome não informado");
+
+
         }
     }
 }

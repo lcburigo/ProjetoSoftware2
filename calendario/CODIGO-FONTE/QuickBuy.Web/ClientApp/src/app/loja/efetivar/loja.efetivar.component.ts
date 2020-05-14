@@ -54,50 +54,5 @@ export class LojaEfetivarComponent implements OnInit {
 
     public efetivarCompra() {
         this.router.navigate(["/dados-compra-entrega"]);
-        /*
-        this.pedidoServico.efetivarCompra(this.criarPedido())
-            .subscribe(
-                pedidoId => {
-                    console.log(pedidoId)
-                    sessionStorage.setItem("pedidoId", pedidoId.toString())
-                    this.produtos = [];
-                    this.carrinhoCompras.limparCarrinhoCompras();
-                    //redicionar para outra pagina de sucesso
-                    this.router.navigate(["/compra-realizada-sucesso"]);
-                },
-                e => {
-                    console.log(e.error);
-                });
-                */
     }
-
-    public criarPedido(): Pedido {
-        let pedido = new Pedido();
-        pedido.usuarioId = this.usuarioServico.usuario.id;
-        pedido.cep = "1233";
-        pedido.cidade = "Blumenau";
-        pedido.dataPedido = new Date();
-        pedido.estado = "Santa catarina";
-        pedido.dataPrevisaoEntrega = new Date();
-        pedido.formaPagamentoId = 1;
-        pedido.numeroEndereco = "12";
-        pedido.enderecoCompleto = "Rua erechim";
-        this.produtos = this.carrinhoCompras.obterProdutos();
-
-        for (let produto of this.produtos) {
-            let itemPedido = new ItemPedido();
-            itemPedido.produtoId = produto.id;
-            
-            if (!produto.quantidade) {
-                produto.quantidade = 1;
-            }
-            else {
-                itemPedido.quantidade = produto.quantidade;
-            }
-            pedido.itensPedido.push(itemPedido);
-        }
-
-        return pedido;
-    }
-
 }

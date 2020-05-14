@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core"
 import { Produto } from "../modelo/produto";
 import { ProdutoServico } from "../servicos/produto/produto.servico";
 import { Router } from "@angular/router";
+import { normalizeAnimationEntry } from "@angular/animations/browser/src/util";
+import { element } from "@angular/core/src/render3/instructions";
 
 @Component({
     selector: "app-produto",
@@ -47,19 +49,77 @@ export class ProdutoComponent implements OnInit {
    
     public cadastrar() {
         this.ativarEspera();
-        this.produtoServico.cadastrar(this.produto)
-            .subscribe(
-                produtoJson => {
-                    console.log(produtoJson);
-                    this.desativarEspera();
-                    this.router.navigate(['/pesquisar-produto']);
-                },
-                e => {
-                    console.log(e.error);
-                    this.mensagem = e.error;
-                    this.desativarEspera();
-                }
-            );
+      
+        if (this.validaCampos()) {
+            this.produtoServico.cadastrar(this.produto)
+                .subscribe(
+                    produtoJson => {
+                        console.log(produtoJson);
+                        this.desativarEspera();
+                        this.router.navigate(['/pesquisar-produto']);
+                    },
+                    e => {
+                        console.log(e.error);
+                        this.mensagem = e.error;
+                        this.desativarEspera();
+                    }
+                );
+        }
+        this.desativarEspera();
+    }
+
+    public validaCampos(): boolean{
+        debugger;
+        var nomeProduto = this.produto.nome;
+        var descricaoProduto = this.produto.descricao;
+        this.ativarEspera();
+        this.mensagem = null;
+
+        if (nomeProduto != null) {
+            nomeProduto = nomeProduto.trim();
+        }
+
+        if (!nomeProduto) {
+            this.produto.nome = "";
+            return false;
+        }
+
+        if (this.produto.nome.length < 10) {
+            return false;
+        }
+
+        if (descricaoProduto != null) {
+            descricaoProduto = descricaoProduto.trim();
+        }
+
+        if (!descricaoProduto) {
+            this.produto.descricao = "";
+            return false;
+        }
+
+        if (this.produto.descricao.length < 50) {
+            return false;
+        }
+
+        if (this.produto.preco < 0) {
+            return false;
+        }
+
+        if (this.produto.preco == null) {
+            this.produto.preco = 0;
+            return false;
+        }
+        
+        if (this.produto.qtdArmazem < 1) {
+            return false;
+        }
+
+        if (this.produto.qtdArmazem == null) {
+            this.produto.qtdArmazem = 0;
+            return false;
+        }
+
+        return true;
     }
 
     public ativarEspera() {

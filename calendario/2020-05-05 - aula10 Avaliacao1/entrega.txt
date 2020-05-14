@@ -1,0 +1,3 @@
+Foi desenvolvida a tela de cadastro de entrega, foi implementado um campo cep que ao ser pesquisado traz os dados 
+do estado, logradouro, cidade e bairro.
+Foi desenvolvida a tela, o estilo e o java script desta tela.

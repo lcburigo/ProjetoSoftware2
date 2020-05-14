@@ -1,0 +1,2 @@
+Foi realizado testes de cada tela com campos de entrada desenvolvida até o momento.
+Muitas correções foram implementadas.
