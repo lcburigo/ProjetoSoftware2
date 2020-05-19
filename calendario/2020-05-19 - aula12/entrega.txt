@@ -1,0 +1,4 @@
+Desenvolvimento da tela de consulta/deletar pedidos.
+Foi criado as rotas para esta nova funcionalidade.
+Foi criado a tela, script e serviços novos para esta nova funcionalidade.
+Foi desenvolvido os novos metodos gets e delete no controller dos pedidos.

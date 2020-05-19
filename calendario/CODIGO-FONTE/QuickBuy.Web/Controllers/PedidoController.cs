@@ -35,5 +35,42 @@ namespace QuickBuy.Web.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+
+        [HttpGet ("{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                var pedidoObtido = _pedidoRepositorio.ObterPorId(id);
+
+                if (pedidoObtido != null)
+                {
+                    return Created("api/pedido", pedidoObtido);
+
+                }
+                return BadRequest("Pedido inválido");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+
+        }
+
+        [HttpPost("Deletar")]
+        public IActionResult Deletar([FromBody] Pedido pedido)
+        {
+            try
+            {
+                // produto recebido deve ter propriedade Id > 0
+                _pedidoRepositorio.Remover(pedido);
+                return Ok(pedido.Id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+
+        }
     }
 }
