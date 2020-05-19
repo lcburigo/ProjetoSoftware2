@@ -69,12 +69,12 @@ export class ProdutoComponent implements OnInit {
     }
 
     public validaCampos(): boolean{
-        debugger;
         var nomeProduto = this.produto.nome;
         var descricaoProduto = this.produto.descricao;
         this.ativarEspera();
         this.mensagem = null;
 
+        
         if (nomeProduto != null) {
             nomeProduto = nomeProduto.trim();
         }
@@ -100,7 +100,7 @@ export class ProdutoComponent implements OnInit {
         if (this.produto.descricao.length < 50) {
             return false;
         }
-
+        
         if (this.produto.preco < 0) {
             return false;
         }

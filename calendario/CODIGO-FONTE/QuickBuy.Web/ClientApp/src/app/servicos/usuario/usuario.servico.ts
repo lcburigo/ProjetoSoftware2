@@ -1,6 +1,6 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
-import { Observable } from  "rxjs";
+import { Observable } from "rxjs";
 import { getBaseUrl } from "../../../main";
 import { Usuario } from "../../modelo/usuario";
 
@@ -38,7 +38,7 @@ export class UsuarioServico {
     public limpar_sessao() {
         sessionStorage.setItem("usuario-autenticado", "0");
         this._usuario = null;
-    } 
+    }
 
     get headers(): HttpHeaders {
         return new HttpHeaders().set('content-type', 'application/json');
@@ -52,6 +52,10 @@ export class UsuarioServico {
     }
 
     public cadastrarUsuario(usuario: Usuario): Observable<Usuario> {
-        return this.http.post<Usuario>(this.baseURL + "api/usuario",JSON.stringify(usuario), { headers: this.headers });
+        return this.http.post<Usuario>(this.baseURL + "api/usuario", JSON.stringify(usuario), { headers: this.headers });
+    }
+
+    public usuarioPedido(pedidoId: number): Observable<Usuario> {
+        return this.http.get<Usuario>(this.baseURL + "api/usuario/" + pedidoId);
     }
 }

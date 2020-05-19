@@ -46,10 +46,11 @@
 </div>
 
 <label for="inputPreco" class="sr-only">Preço</label>
-<input type="number"
+<input currencyMask
+       [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
        id="inputPreco"
        name="precoProduto"
-       placeholder="Preço"
+       placeholder="Preço                                       "
        class="form-control mb-2 col-md-2"
        [ngClass]="{
           'is-invalid': preco.invalid && (preco.dirty || preco.touched),
@@ -58,6 +59,7 @@
        [(ngModel)]="produto.preco"
        #preco="ngModel"
        pattern= [1-9][0-9]*
+       maxlength="15"       
        required />
 
 <div class="invalid-feedback mb-2" *ngIf="preco.invalid && (preco.dirty || preco.touched || produto.preco == 0)">
@@ -74,7 +76,7 @@
 <input type="number"
        id="inputQuantidade"
        name="quantidadeProduto"
-       placeholder="Quantidade"
+       placeholder="Quantidade                                                   "
        class="form-control mb-2 col-md-2"
        [ngClass]="{
           'is-invalid': quantidade.invalid && (quantidade.dirty || quantidade.touched),
@@ -83,6 +85,7 @@
        [(ngModel)]="produto.qtdArmazem"
        #quantidade="ngModel"
        pattern= [1-9][0-9]*
+       style="text-align: right"
        required />
 
 <div class="invalid-feedback mb-2" *ngIf="quantidade.invalid && (quantidade.dirty || quantidade.touched || produto.qtArmazem == 0)">

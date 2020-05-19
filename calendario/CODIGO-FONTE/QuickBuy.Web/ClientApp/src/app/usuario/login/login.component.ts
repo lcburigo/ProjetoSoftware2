@@ -6,7 +6,7 @@ import { UsuarioServico } from "../../servicos/usuario/usuario.servico";
 @Component({
     selector: "app-login",
     templateUrl: "./login.component.html",
-    styleUrls:["./login.component.css"]
+    styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     private ativar_spinner: boolean;
 
     constructor(private router: Router, private activatedRouter: ActivatedRoute, private usuarioServico: UsuarioServico) {
-        this.usuario = new Usuario();       
+        this.usuario = new Usuario();
     }
 
     ngOnInit(): void {
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     }
 
     entrar() {
-  
+
         this.ativar_spinner = true;
         this.usuarioServico.verificaUsuario(this.usuario)
             .subscribe(
@@ -48,6 +48,6 @@ export class LoginComponent implements OnInit {
                     this.ativar_spinner = false;
                 }
             );
-     
+
     }
 }

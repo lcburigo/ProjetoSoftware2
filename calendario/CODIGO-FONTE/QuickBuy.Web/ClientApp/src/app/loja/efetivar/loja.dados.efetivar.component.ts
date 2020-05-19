@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
     styleUrls: ["./loja.dados.efetivar.component.css"]
 })
 
+
 export class LojaDadosEfetivarComponent implements OnInit {
     public carrinhoCompras: LojaCarrrinhoCompras;
     public produtos: Produto[];
@@ -151,6 +152,7 @@ export class LojaDadosEfetivarComponent implements OnInit {
                 itemPedido.quantidade = produto.quantidade;
             }
             itemPedido.preco = produto.preco;
+            itemPedido.nomeProduto = produto.nome
             pedido.itensPedido.push(itemPedido);
         }
 

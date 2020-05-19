@@ -21,4 +21,12 @@ export class PedidoServico {
     public efetivarCompra(pedido: Pedido): Observable<number>{
         return this.http.post<number>(this._baseUrl + "api/pedido", JSON.stringify(pedido), { headers: this.headers });
     }
+
+    public usuarioPedido(pedidoId: number): Observable<Pedido> {
+        return this.http.get<Pedido>(this._baseUrl + "api/pedido/" + pedidoId);
+    }
+
+    public deletar(pedido: Pedido): Observable<number> {
+        return this.http.post<number>(this._baseUrl + "api/pedido/Deletar", JSON.stringify(pedido), { headers: this.headers });          
+    }
 }

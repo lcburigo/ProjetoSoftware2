@@ -42,8 +42,8 @@ export class ProdutoServico implements OnInit {
         return this.http.get<Produto[]>(this.baseURL + "api/produto");
     }
 
-    public obterProduto(produtoId: number): Observable<Produto> {
-        return this.http.get<Produto>(this.baseURL + "api/produto");
+    public obterProduto(produtoId: number): Observable<number> {
+        return this.http.get<number>(this.baseURL + "api/produto");
     }
 
     enviarArquivo(arquivoSelecionado: File): Observable<string> {

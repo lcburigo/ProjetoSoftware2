@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuickBuy.Dominio.Contrato;
+using Microsoft.AspNetCore.Mvc;
+using QuickBuy.Dominio.Contrato;
 using QuickBuy.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
@@ -57,11 +59,32 @@ namespace QuickBuy.Web.Controllers
             try
             {
                 var usuarioRetorno = _usuarioRepositorio.Obter(usuario.Email, usuario.Senha);
-                if(usuarioRetorno != null)
+                if (usuarioRetorno != null)
                 {
                     return Ok(usuarioRetorno);
                 }
                 return BadRequest("Usuário ou senha inválido");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                var usuatioObtido = _usuarioRepositorio.ObterPorId(id);
+
+                if (usuatioObtido != null)
+                {
+                    return Created("api/pedido", usuatioObtido);
+
+                }
+                return BadRequest("Usuário inválido");
             }
             catch (Exception ex)
             {

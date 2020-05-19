@@ -1,0 +1,100 @@
+<h1 class="h4 titulo">Consulta de pedidos</h1>
+<div class="form-inline">
+  <label for="inputPedido" class="sr-only">Pedido</label>
+  <input type="search" id="inputPedido"
+         name="pedido"
+         placeholder="Pedido"
+         class="form-control mb-2 col-md-3"
+         [ngClass]="{
+          'is-invalid': pedido.invalid && (pedido.dirty || pedido.touched),
+          'is-valid': pedido.valid && (pedido.dirty || pedido.touched)
+       }"
+         [(ngModel)]="pedido.id"
+         #cep="ngModel"
+         maxlength="8"
+         required />
+  <button class="btn btn-primary mb-2" style="margin-right:4px;" (click)="pesquisaPedido()" [disabled]="ativar_spinner">
+    <span class="spinner-border spinner-border-sm" *ngIf="ativar_spinner"></span>
+    Pesquisar
+  </button>
+  <div class="invalid-feedback mb-2" *ngIf="pedido.invalid && (pedido.dirty || pedido.touched)">
+    <div *ngIf="pedido.errors.required">
+      Por favor, informe um Pedido válido
+    </div>
+  </div>
+</div>
+
+<label for="inputEmail" class="sr-only">Email</label>
+<input type="email" id="inputEmail"
+       name=" = email" placeholder="Email"
+       class="form-control mb-2 col-md-4"
+       #email="ngModel"
+       [ngClass]="{
+            'is-invalid':email.invalid && (email.touched || email.dirty),
+            'is-valid':email.valid && (email.touched || email.dirty)
+           }"
+       [(ngModel)]="usuario.email"
+       disabled
+       required />
+
+<div class="invalid-feedback mb-2" *ngIf="email.invalid && (email.touched || email.dirty)">
+  <div *ngIf="email.errors.required">
+    Email inválido!
+  </div>
+  <div *ngIf="email.errors.email">
+    Email está no formato inválido!
+  </div>
+</div>
+
+<label for="inputNome" class="sr-only">Nome</label>
+<input type="text" id="inputNome"
+       name=" = nome" placeholder="Nome"
+       class="form-control mb-2 col-md-4"
+       #nome="ngModel"
+       [ngClass]="{
+            'is-invalid':nome.invalid && (nome.touched || nome.dirty),
+            'is-valid':nome.valid && (nome.touched || nome.dirty)
+           }"
+       [(ngModel)]="usuario.nome"
+       minlength="1"
+       disabled
+       required />
+
+<div class="invalid-feedback mb-2" *ngIf="nome.invalid && (nome.touched || nome.dirty || usuario.nome == '')">
+  <div *ngIf="nome.errors.required || usuario.nome == ''">
+    Nome é de preenchimento obrigatório!
+  </div>
+  <div *ngIf="nome.errors.minlength">
+    Nome é de preenchimento obrigatório!
+  </div>
+</div>
+
+<div class="alert alert-danger mb-2 col-md-4" *ngIf="mensagem">
+  {{mensagem}}
+</div>
+<div *ngIf="itemPedido">
+  <div class="mb-2" style="text-align: right">
+    <button type="button" class="btn btn-danger" (click)="excluirPedido()">Cancelar pedido</button>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th style="width:40%; height:10%; text-align: center">Nome</th>
+        <th style="width:30%; height:10%; text-align: center">Quantidade</th>
+        <th style="width:30%; height:10%; text-align: center">Preço</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of itemPedido">
+        <td style="width:40%; height:10%; text-align: center">{{i.nomeProduto}} </td>
+        <td style="width:30%; height:10%; text-align: center">{{i.quantidade}}</td>
+        <td style="width:30%; height:10%; text-align: center">
+          <input style="width:80%; height:10%;" currencyMask class="form-control" [(ngModel)]="i.preco" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" disabled />
+        </td>
+        <td> </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

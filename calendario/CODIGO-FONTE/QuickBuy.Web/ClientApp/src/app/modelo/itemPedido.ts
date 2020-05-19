@@ -3,4 +3,5 @@ export class ItemPedido {
     public produtoId: number;
     public quantidade: number;
     public preco: number;
+    public nomeProduto: string;
 }
