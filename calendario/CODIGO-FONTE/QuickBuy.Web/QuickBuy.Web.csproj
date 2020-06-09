@@ -42,6 +42,7 @@
     <None Remove="ClientApp\src\app\modelo\entrega.ts" />
     <None Remove="ClientApp\src\app\modelo\itemPedido.ts" />
     <None Remove="ClientApp\src\app\modelo\pedido.ts" />
+    <None Remove="ClientApp\src\app\modelo\pedidoFaturado.ts" />
     <None Remove="ClientApp\src\app\modelo\usuario.ts" />
     <None Remove="ClientApp\src\app\pedido\consulta\pedido.component.ts" />
     <None Remove="ClientApp\src\app\pedido\faturamento\faturamento.component.ts" />
@@ -75,6 +76,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\modelo\entrega.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modelo\itemPedido.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modelo\pedido.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\modelo\pedidoFaturado.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modelo\usuario.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\pedido\consulta\pedido.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\pedido\faturamento\faturamento.component.ts" />

@@ -1,7 +1,8 @@
 import { Injectable, Inject} from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Pedido } from "../../modelo/pedido";
+import { Data } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -22,11 +23,18 @@ export class PedidoServico {
         return this.http.post<number>(this._baseUrl + "api/pedido", JSON.stringify(pedido), { headers: this.headers });
     }
 
-    public usuarioPedido(pedidoId: number): Observable<Pedido> {
+    public pedido(pedidoId: number): Observable<Pedido> {
         return this.http.get<Pedido>(this._baseUrl + "api/pedido/" + pedidoId);
     }
 
     public deletar(pedido: Pedido): Observable<number> {
         return this.http.post<number>(this._baseUrl + "api/pedido/Deletar", JSON.stringify(pedido), { headers: this.headers });          
+    }
+
+    public obterTodosPedidos(dataInicial: string, datafinal: string): Observable<Pedido[]> {
+        var teste = JSON.stringify({ dataInicial: dataInicial, dataFinal: datafinal })
+        let params = new HttpParams().set("dataInicial", dataInicial).set("dataFinal", datafinal);
+        return this.http.get<Pedido[]>(this._baseUrl + "api/pedido/pedidoData" , { headers: this.headers, params: params });
+ 
     }
 }

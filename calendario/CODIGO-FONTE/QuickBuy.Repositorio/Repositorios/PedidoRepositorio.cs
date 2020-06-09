@@ -1,6 +1,7 @@
 ﻿using QuickBuy.Dominio.Contrato;
 using QuickBuy.Dominio.Entidades;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,9 +14,11 @@ namespace QuickBuy.Repositorio.Repositorios
 
         }
 
-        public List<Pedido> ObterPedidos()
+        public List<Pedido> ObterPedidos(DateTime faixaInicial, DateTime faixaFinal)
         {
-            throw new NotImplementedException();
+            return QuickBuyContexto.Pedidos
+                .Where(p => p.DataPedido >= faixaInicial && p.DataPedido <= faixaFinal)
+                .ToList();
         }
     }
 }

@@ -160,7 +160,9 @@ export class LojaDadosEfetivarComponent implements OnInit {
     }
 
     public validaCampos(): boolean {
-        var cep = this.entrega.cep.replace("-", "");
+        if (this.entrega.cep != null) {
+            var cep = this.entrega.cep.replace("-", "");
+        }
         if (cep != this.pedido.cep) {
             this.mensagem = "Cep não corresponde ao endereço"
             return false;
@@ -168,6 +170,11 @@ export class LojaDadosEfetivarComponent implements OnInit {
 
         if (this.entrega.numeroEndereco == null) {
             this.mensagem = "Número inválido";
+            return false;
+        }
+
+        if (this.entrega.uf == null) {
+            this.mensagem = "Estado inválido";
             return false;
         }
 

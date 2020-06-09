@@ -1,0 +1,1 @@
+Serviço para validar data para poder gerar relatório de vendas por data.

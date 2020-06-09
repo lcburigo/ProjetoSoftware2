@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuickBuy.Dominio.Contrato;
-using Microsoft.AspNetCore.Mvc;
-using QuickBuy.Dominio.Contrato;
 using QuickBuy.Dominio.Entidades;
+using QuickBuy.Dominio.ObjetoDeValor;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace QuickBuy.Web.Controllers
 {
@@ -59,6 +55,7 @@ namespace QuickBuy.Web.Controllers
             try
             {
                 var usuarioRetorno = _usuarioRepositorio.Obter(usuario.Email, usuario.Senha);
+
                 if (usuarioRetorno != null)
                 {
                     return Ok(usuarioRetorno);
