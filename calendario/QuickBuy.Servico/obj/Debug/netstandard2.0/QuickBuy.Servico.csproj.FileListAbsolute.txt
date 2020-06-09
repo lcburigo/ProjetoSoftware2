@@ -1,0 +1,8 @@
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\bin\Debug\netstandard2.0\QuickBuy.Servico.deps.json
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\bin\Debug\netstandard2.0\QuickBuy.Servico.dll
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\bin\Debug\netstandard2.0\QuickBuy.Servico.pdb
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\obj\Debug\netstandard2.0\QuickBuy.Servico.csprojAssemblyReference.cache
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\obj\Debug\netstandard2.0\QuickBuy.Servico.AssemblyInfoInputs.cache
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\obj\Debug\netstandard2.0\QuickBuy.Servico.AssemblyInfo.cs
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\obj\Debug\netstandard2.0\QuickBuy.Servico.dll
+C:\Projetos\QuickBuy\calendario\CODIGO-FONTE\QuickBuy.Servico\obj\Debug\netstandard2.0\QuickBuy.Servico.pdb

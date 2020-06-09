@@ -34,7 +34,7 @@ export class PedidoComponent implements OnInit {
         this.usuario = new Usuario();
         this.itemPedido = null;
 
-        this.pedidoServico.usuarioPedido(this.pedido.id)
+        this.pedidoServico.pedido(this.pedido.id)
             .subscribe(
                 pedidoJson => {
                     console.log(pedidoJson)
