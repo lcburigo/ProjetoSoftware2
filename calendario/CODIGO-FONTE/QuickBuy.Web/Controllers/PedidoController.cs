@@ -6,11 +6,10 @@ using QuickBuy.Dominio.ObjetoDeValor;
 using QuickBuy.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
-
 using System.IO;
-
 using System.Linq;
 using System.Threading.Tasks;
+using QuickBuy.Web.Servico.PedidoServico;
 
 namespace QuickBuy.Web.Controllers
 {
@@ -18,9 +17,13 @@ namespace QuickBuy.Web.Controllers
     public class PedidoController : Controller
     {
         private readonly IPedidoRepositorio _pedidoRepositorio;
-        public PedidoController(IPedidoRepositorio pedidoRepositorio)
+        private readonly IProdutoRepositorio _produtoRepositorio;
+        private readonly Compra _compra;
+        public PedidoController(IPedidoRepositorio pedidoRepositorio, IProdutoRepositorio produtoRepositorio)
         {
             this._pedidoRepositorio = pedidoRepositorio;
+            this._produtoRepositorio = produtoRepositorio;
+            this._compra = new Compra(this._pedidoRepositorio, this._produtoRepositorio);
         }
 
         [HttpPost]
@@ -28,7 +31,7 @@ namespace QuickBuy.Web.Controllers
         {
             try
             {
-                _pedidoRepositorio.Adicionar(pedido);
+                this._compra.efetivaCompra(pedido);
                 return Ok(pedido.Id);
             }
             catch (Exception ex)
@@ -39,12 +42,24 @@ namespace QuickBuy.Web.Controllers
 
         //[HttpGet("{dataInicial}/{dataFinal}")]
         [HttpGet("pedidoData")]
-        public IActionResult Get(DateTime dataInicial, DateTime dataFinal)
+        public IActionResult Get(DateTime dataInicial, DateTime dataFinal, int pagina)
+        {
+            try
+            {  
+                return Json(this._compra.consultaPedidoPorData(dataInicial, dataFinal, pagina));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet("totalFaturadoPeriodo")]
+        public IActionResult GetTotalPeriodo(DateTime dataInicial, DateTime dataFinal)
         {
             try
             {
-                var variavelProdutoTeste = _pedidoRepositorio.ObterPedidos(dataInicial, dataFinal);
-                return Json(variavelProdutoTeste);
+                return Ok(this._compra.totalFaturadoPeriodo(dataInicial, dataFinal));
             }
             catch (Exception ex)
             {
@@ -57,7 +72,7 @@ namespace QuickBuy.Web.Controllers
         {
             try
             {
-                var pedidoObtido = _pedidoRepositorio.ObterPorId(id);
+                var pedidoObtido = this._compra.consultaPedido(id);
 
                 if (pedidoObtido != null)
                 {
@@ -78,8 +93,7 @@ namespace QuickBuy.Web.Controllers
         {
             try
             {
-                // produto recebido deve ter propriedade Id > 0
-                _pedidoRepositorio.Remover(pedido);
+                _compra.deletarPedido(pedido);
                 return Ok(pedido.Id);
             }
             catch (Exception ex)
@@ -87,6 +101,19 @@ namespace QuickBuy.Web.Controllers
                 return BadRequest(ex.ToString());
             }
 
+        }
+
+        [HttpGet("numeroDePaginas")]
+        public IActionResult GetNumeroElementos(DateTime dataInicial, DateTime dataFinal)
+        {
+            try
+            {
+                return Ok(_compra.totalElementosPeriodo(dataInicial, dataFinal));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
     }
 }

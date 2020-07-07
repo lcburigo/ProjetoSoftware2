@@ -20,6 +20,7 @@ export class PedidoServico {
     }
 
     public efetivarCompra(pedido: Pedido): Observable<number>{
+
         return this.http.post<number>(this._baseUrl + "api/pedido", JSON.stringify(pedido), { headers: this.headers });
     }
 
@@ -31,10 +32,22 @@ export class PedidoServico {
         return this.http.post<number>(this._baseUrl + "api/pedido/Deletar", JSON.stringify(pedido), { headers: this.headers });          
     }
 
-    public obterTodosPedidos(dataInicial: string, datafinal: string): Observable<Pedido[]> {
-        var teste = JSON.stringify({ dataInicial: dataInicial, dataFinal: datafinal })
-        let params = new HttpParams().set("dataInicial", dataInicial).set("dataFinal", datafinal);
+    public obterTodosPedidos(dataInicial: string, datafinal: string, pagina: number): Observable<Pedido[]> {
+        var teste = JSON.stringify({ dataInicial: dataInicial, dataFinal: datafinal, pagina: pagina })
+        let params = new HttpParams().set("dataInicial", dataInicial).set("dataFinal", datafinal).set("pagina", pagina.toString());
         return this.http.get<Pedido[]>(this._baseUrl + "api/pedido/pedidoData" , { headers: this.headers, params: params });
  
+    }
+
+    public obterNumeroElementos(dataInicial: string, datafinal: string): Observable<number> {
+        var teste = JSON.stringify({ dataInicial: dataInicial, dataFinal: datafinal })
+        let params = new HttpParams().set("dataInicial", dataInicial).set("dataFinal", datafinal);
+        return this.http.get<number>(this._baseUrl + "api/pedido/numeroDePaginas", { headers: this.headers, params: params });
+    }
+
+    public totalFaturadoPeriodo(dataInicial: string, datafinal: string): Observable<number> {
+        var teste = JSON.stringify({ dataInicial: dataInicial, dataFinal: datafinal })
+        let params = new HttpParams().set("dataInicial", dataInicial).set("dataFinal", datafinal);
+        return this.http.get<number>(this._baseUrl + "api/pedido/totalFaturadoPeriodo", { headers: this.headers, params: params });
     }
 }

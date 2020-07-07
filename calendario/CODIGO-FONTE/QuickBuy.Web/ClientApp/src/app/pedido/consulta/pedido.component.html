@@ -89,9 +89,7 @@
       <tr *ngFor="let i of itemPedido">
         <td style="width:40%; height:10%; text-align: center">{{i.nomeProduto}} </td>
         <td style="width:30%; height:10%; text-align: center">{{i.quantidade}}</td>
-        <td style="width:30%; height:10%; text-align: center">
-          <input style="width:80%; height:10%;" currencyMask class="form-control" [(ngModel)]="i.preco" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" disabled />
-        </td>
+        <td style="width:30%; height:10%; text-align: center">{{i.preco | currency:'BRL':true}}</td>
         <td> </td>
       </tr>
     </tbody>

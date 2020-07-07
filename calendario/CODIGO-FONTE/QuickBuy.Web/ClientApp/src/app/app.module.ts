@@ -24,6 +24,12 @@ import { PedidoComponent } from './pedido/consulta/pedido.component';
 import { FaturamentoComponent } from './pedido/faturamento/faturamento.component';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+registerLocaleData(localePt);
+
+
 @NgModule({
   declarations: [
         AppComponent,
@@ -61,8 +67,8 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
         { path: "app-faturamento", component: FaturamentoComponent, canActivate: [GuardaRotas] }
     ])
     ],
-    providers: [UsuarioServico, ProdutoServico, PedidoServico],
-  bootstrap: [AppComponent]
+    providers: [UsuarioServico, ProdutoServico, PedidoServico, { provide: LOCALE_ID, useValue: "pt-BR" }],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
 

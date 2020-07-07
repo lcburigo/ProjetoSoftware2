@@ -7,6 +7,8 @@ namespace QuickBuy.Dominio.Contrato
 {
     public interface IPedidoRepositorio : IBaseRepositorio<Pedido>
     {
-        List<Pedido> ObterPedidos(DateTime faixaInicial, DateTime faixaFinal);
+        decimal totalElementosPeriodo(DateTime dataInicial, DateTime dataFinal);
+        List<Pedido> ObterPedidos(DateTime faixaInicial, DateTime faixaFinal, int pagina);
+        decimal totalFaturadoPeriodo(DateTime faixaInicial, DateTime faixaFinal);
     }
 }

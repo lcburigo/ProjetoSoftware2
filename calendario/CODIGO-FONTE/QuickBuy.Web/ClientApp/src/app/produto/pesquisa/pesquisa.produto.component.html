@@ -16,35 +16,22 @@
   </thead>
   <tbody>
     <tr *ngFor="let p of produtos">
-      <td>{{p.nome}}</td>
-      <td style="width:50%; height:10%">{{p.descricao}}</td>
-      <td style="width:10%; height:10%">
-        <input currencyMask class="form-control" [(ngModel)]="p.preco" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" disabled/>     
+      <td style="width:10%; height:10%">{{p.nome}}</td>
+      <td style="width:40%; height:10%">{{p.descricao}}</td>
+      <td style="width:15%; height:10%">
+        <input currencyMask class="form-control" [(ngModel)]="p.preco" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" disabled />
       </td>
-      <td><img src="../../../../../arquivos/{{p.nomeArquivo}}" style="width:40%; height:10%" /></td>
-      <td><button class="btn btn-success btn-sm" (click)="editarProduto(p)">Editar</button></td>
-      <td><button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Deletar</button></td>
-
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Atenção</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Deseja realmente deletar o produto selecionado?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deletarProduto(p)">Sim</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <td style="width:15%; height:10%"><img src="../../../../../arquivos/{{p.nomeArquivo}}" style="width:40%; height:10%" /></td>
+      <td style="width:10%; height:10%"><button class="btn btn-success btn-sm" (click)="editarProduto(p)">Editar</button></td>
+      <td style="width:10%; height:10%"><button class="btn btn-danger btn-sm" data-toggle="modal" (click)="deletarProduto(p)">Deletar</button></td>
     </tr>
   </tbody>
-
 </table>
+
+<nav aria-label="...">
+  <ul class="pagination pagination-lg">
+    <li class="page-item" *ngFor="let t of indicePaginas; let i = index">
+      <a class="page-link page-item" (click)="paginacao(i)">{{i + 1}}</a>
+    </li>
+  </ul>
+</nav>

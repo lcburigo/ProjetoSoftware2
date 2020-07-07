@@ -1,1 +1,7 @@
-<app-loja></app-loja>
+<div *ngIf="!usuario_administrador()">
+  <app-loja></app-loja>
+</div>
+
+<div *ngIf="usuario_administrador()">
+  <app-faturamento></app-faturamento>
+</div>

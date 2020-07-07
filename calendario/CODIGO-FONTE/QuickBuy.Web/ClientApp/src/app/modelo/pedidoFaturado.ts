@@ -3,5 +3,5 @@ export class PedidoFaturado {
     public dataPedido: string;
     public dataPrevisaoEntrega: string;
     public formaPagamentoId: number;
-    public preco: number;
+    public preco: string;
 }
