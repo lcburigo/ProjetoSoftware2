@@ -35,7 +35,7 @@
        #descricao="ngModel"
        required
        minlength="50"
-       maxlength="400"/>
+       maxlength="400" />
 <div class="invalid-feedback mb-2" *ngIf="descricao.invalid && (descricao.dirty || descricao.touched || produto.descricao == '')">
   <div *ngIf="descricao.errors.required">
     Descrição do produto é de preenchimento obrigatório
@@ -58,16 +58,12 @@
        }"
        [(ngModel)]="produto.preco"
        #preco="ngModel"
-       pattern= [1-9][0-9]*
-       maxlength="15"       
+       maxlength="15"
        required />
 
-<div class="invalid-feedback mb-2" *ngIf="preco.invalid && (preco.dirty || preco.touched || produto.preco == 0)">
+<div class="invalid-feedback mb-2" *ngIf="preco.invalid && (preco.dirty || preco.touched)">
   <div *ngIf="preco.errors.required">
     Preço do produto é de preenchimento obrigatório
-  </div>
-  <div *ngIf="preco.invalid">
-    Campo tem que ser maior que zero
   </div>
 </div>
 
@@ -84,7 +80,7 @@
        }"
        [(ngModel)]="produto.qtdArmazem"
        #quantidade="ngModel"
-       pattern= [1-9][0-9]*
+       pattern=[1-9][0-9]*
        style="text-align: right"
        required />
 

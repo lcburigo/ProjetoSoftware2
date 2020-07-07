@@ -1,5 +1,5 @@
 import {Injectable, Inject, OnInit } from "@angular/core"
-import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHandler, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Produto } from "../../modelo/produto";
 
@@ -44,6 +44,16 @@ export class ProdutoServico implements OnInit {
 
     public obterProduto(produtoId: number): Observable<number> {
         return this.http.get<number>(this.baseURL + "api/produto");
+    }
+
+    public obterNumeroElementos( ): Observable<number> {
+        return this.http.get<number>(this.baseURL + "api/produto/numeroDePaginas");
+    }
+
+    public obterProdutoPaginacao(page: number): Observable<Produto[]> {
+        var teste = JSON.stringify({ page: page })
+        let params = new HttpParams().set("page", page.toString());
+        return this.http.get<Produto[]>(this.baseURL + "api/produto/produtoPaginacao", { headers: this.headers, params: params });
     }
 
     enviarArquivo(arquivoSelecionado: File): Observable<string> {

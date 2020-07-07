@@ -9,7 +9,9 @@ namespace QuickBuy.Dominio.Contrato
         void Adicionar(TEntity entity);
         TEntity ObterPorId(int id);
         IEnumerable<TEntity> ObterTodos();
+        IEnumerable<TEntity> ItemPorPagina(int pagina);
         void Atualizar(TEntity entity);
         void Remover(TEntity entity);
+        decimal quantidadeElementos();
     }
 }

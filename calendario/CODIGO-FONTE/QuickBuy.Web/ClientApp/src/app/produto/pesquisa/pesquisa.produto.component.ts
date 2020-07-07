@@ -12,20 +12,15 @@ import { Router } from "@angular/router";
 export class PesquisaProdutoComponet implements OnInit {
 
     public produtos: Produto[];
+    public indicePaginas;
 
     ngOnInit(): void {
         
     }
 
     constructor(private produtoServico: ProdutoServico, private router: Router) {
-        this.produtoServico.obterTodosProdutos()
-            .subscribe(
-                produtos => {
-                    this.produtos = produtos
-                },
-                e => {
-                    console.log(e.error);
-                });
+        this.numeroDePaginas();
+        this.paginacao(0);
     }
 
     public adicionarProduto() {
@@ -48,6 +43,28 @@ export class PesquisaProdutoComponet implements OnInit {
                }
 
             )
+    }
+
+    public numeroDePaginas() {
+        this.produtoServico.obterNumeroElementos()
+            .subscribe(
+                total => {
+                    this.indicePaginas = new Array(total);
+                },
+                e => {
+                    console.log(e.error);
+                });
+    }
+
+    public paginacao(pagAtual: number) {
+        this.produtoServico.obterProdutoPaginacao(pagAtual)
+            .subscribe(
+                produtos => {
+                    this.produtos = produtos
+                },
+                e => {
+                    console.log(e.error);
+                });
     }
 
 

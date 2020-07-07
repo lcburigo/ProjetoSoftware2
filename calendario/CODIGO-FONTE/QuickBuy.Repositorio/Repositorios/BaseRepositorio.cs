@@ -38,6 +38,24 @@ namespace QuickBuy.Repositorio.Repositorios
             return QuickBuyContexto.Set<TEntity>().ToList();   
         }
 
+        public decimal  quantidadeElementos()
+        {
+            decimal maximoElementos = 2;
+            decimal numeroDeElementos = 0;
+            numeroDeElementos = QuickBuyContexto.Set<TEntity>()
+                                     .Count();
+            maximoElementos = numeroDeElementos / maximoElementos;
+            return Math.Ceiling(maximoElementos);
+        }
+
+        public IEnumerable<TEntity> ItemPorPagina(int pagina)
+        {
+            int qtdadeItens = 2;
+            return QuickBuyContexto.Set<TEntity>()
+                       .Skip(qtdadeItens * pagina).Take(qtdadeItens).ToList();
+        }
+
+
         public void Remover(TEntity entity)
         {
             QuickBuyContexto.Remove(entity);

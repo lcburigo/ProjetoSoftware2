@@ -63,7 +63,8 @@ export class ProdutoComponent implements OnInit {
                         this.mensagem = e.error;
                         this.desativarEspera();
                     }
-                );
+            );
+
         }
         this.desativarEspera();
     }

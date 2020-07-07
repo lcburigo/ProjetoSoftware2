@@ -10,6 +10,7 @@ using System.IO;
 
 using System.Linq;
 using System.Threading.Tasks;
+using QuickBuy.Web.Servico.ProdutoServico;
 
 namespace QuickBuy.Web.Controllers
 {
@@ -19,23 +20,40 @@ namespace QuickBuy.Web.Controllers
         private readonly IProdutoRepositorio _produtoRepositorio;       
         private IHttpContextAccessor _httpContextAccessor;
         private IHostingEnvironment _hostingEnvironment;
+        private readonly CadastroProduto _produto;
         public ProdutoController(IProdutoRepositorio produtoRepositorio, 
                                      IHttpContextAccessor httpContextAccessor, IHostingEnvironment hostingEnvironment)
         {
             _produtoRepositorio = produtoRepositorio;
             _httpContextAccessor = httpContextAccessor;
             _hostingEnvironment = hostingEnvironment;
+            _produto = new CadastroProduto(_produtoRepositorio);
+
         }
 
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("produtoPaginacao")]
+        public IActionResult Get(int page)
         {
             try
             {
-                return Json(_produtoRepositorio.ObterTodos());
+                return Json(_produtoRepositorio.ItemPorPagina(page));
                 //return Json(_produtoRepositorio.ObterProdutos(3, 10));
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpGet("numeroDePaginas")]
+        public IActionResult GetNumeroElementos()
+        {
+            try
+            {
+                return Ok (_produtoRepositorio.quantidadeElementos());
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.ToString());
             }
@@ -51,14 +69,7 @@ namespace QuickBuy.Web.Controllers
                 {
                     return BadRequest(produto.ObterMensagensValidacao());
                 }
-                if (produto.Id > 0)
-                {
-                    _produtoRepositorio.Atualizar(produto);
-                }
-                else
-                {
-                    _produtoRepositorio.Adicionar(produto);    
-                }
+                _produto.cadastroProduto(produto);
                 return Created("api/produto", produto);
             }
             catch (Exception ex)

@@ -18,7 +18,9 @@ export class FaturamentoComponent implements OnInit {
     public dataInicial: string;
     public dataFinal: string;
     public mensagem: string;
+    public valor: number;
     public totalLista: number;
+    public indicePaginas;
     public ativar_spinner: boolean;
 
     constructor(private pedidoServico: PedidoServico) {
@@ -28,13 +30,15 @@ export class FaturamentoComponent implements OnInit {
 
     ngOnInit(): void {
         this.dataHoje();
-        this.consultarFaturamento();
+        this.numeroDePaginas();
+        this.consultarFaturamento(0);
     }
 
-    public consultarFaturamento() {
+    public consultarFaturamento(pagina:number) {
         this.mensagem = "";
+        this.pedidoLista = [];
+        //this.totalLista = "R$0";
         if (this.validaData()) {
-
             this.mensagem = null;
             this.ativarEspera();
             this.itemPedido = null;
@@ -50,7 +54,7 @@ export class FaturamentoComponent implements OnInit {
             }
             var dataFinal = data[0] + "-" + data[1] + "-" + diaString;
 
-            this.pedidoServico.obterTodosPedidos(this.dataInicial, dataFinal)
+            this.pedidoServico.obterTodosPedidos(this.dataInicial, dataFinal, pagina)
                 .subscribe(
                     pedidos => {
                         console.log(pedidos)
@@ -63,12 +67,13 @@ export class FaturamentoComponent implements OnInit {
                     });
 
         }
+        this.totalFaturadoPeriodo(dataFinal);
+        this.numeroDePaginas();
         this.desativarEspera();
     }
 
-    public montaListaPedido() {
-        this.pedidoLista = [];
-        this.totalLista = 0;
+    public montaListaPedido() {     
+        //this.valor = 0;
         var pedido = new Pedido();
         var pedidoFaturado = new PedidoFaturado();
         var total = 0;
@@ -82,15 +87,51 @@ export class FaturamentoComponent implements OnInit {
             pedidoFaturado.dataPrevisaoEntrega = dataEntrega.substring(10, 8) + "/" + dataEntrega.substring(7, 5) + "/" + dataEntrega.substring(0, 4);
             total = 0;
             for (var i = 0; i < itens.length; i++) {
-                pedidoFaturado.preco = itens[i].preco + total;
-                var total = pedidoFaturado.preco;
+                var preco = itens[i].preco + total;
+                var total = preco;
             }
-            this.totalLista = this.totalLista + pedidoFaturado.preco;
+            pedidoFaturado.preco = (preco).toLocaleString('pt-BR', { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' });
+            //this.valor = this.valor + preco;
             this.pedidoLista.push(pedidoFaturado);
         }
+        //this.totalLista = (this.valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' });
+    }
+
+    public totalFaturadoPeriodo(dataFinal: string) {
+        this.totalLista = 0;
+        this.pedidoServico.totalFaturadoPeriodo(this.dataInicial, dataFinal)
+            .subscribe(
+                totalPeriodo => {
+                    this.totalLista = totalPeriodo;
+                },
+                e => {
+                    console.log(e.error);
+                    this.mensagem = e.error;
+                });
     }
         
+    public numeroDePaginas() {
+        //soma um no dia pois para consistir a data final no C#
+        var data = this.dataFinal.split("-");
+        var dia = parseInt(data[2]) + 1
+        var diaString;
+        if (dia < 10) {
+            diaString = "0" + dia;
+        }
+        else {
+            diaString = dia;
+        }
+        var dataFinal = data[0] + "-" + data[1] + "-" + diaString;
 
+        this.pedidoServico.obterNumeroElementos(this.dataInicial, dataFinal)
+            .subscribe(
+                total => {
+                    this.indicePaginas = new Array(total);
+                },
+                e => {
+                    console.log(e.error);
+                });
+    }
 
     public validaData(): boolean {
         

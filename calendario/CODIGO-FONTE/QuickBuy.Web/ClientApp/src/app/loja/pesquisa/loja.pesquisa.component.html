@@ -8,10 +8,18 @@
           <img class="card-top" src="../../../../../arquivos/{{p.nomeArquivo}}" style="width:200px; height:200px;" />
           <div class="card-body">
             <div class="card-text">{{p.descricao | truncate: 50}}</div>
-            <h5 class="h5">R${{p.preco}}</h5>
+            <h5 class="h5">{{p.preco | currency:'BRL':true}}</h5>
           </div>
         </div>
       </a>
-    </div> 
+    </div>
   </div>
 </div>
+  <nav aria-label="...">
+    <ul class="pagination pagination-lg" >
+      <li class="page-item" *ngFor="let t of indicePaginas; let i = index">
+        <a class="page-link page-item" (click)="paginacao(i)">{{i + 1}}</a>
+      </li>
+    </ul>
+  </nav>
+

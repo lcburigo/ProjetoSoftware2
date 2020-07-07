@@ -15,12 +15,5 @@ namespace QuickBuy.Repositorio.Repositorios
 
         }
 
-        public List<Produto> ObterProdutos(int faixaInicial, int faixaFinal)
-        {
-            return QuickBuyContexto.Produtos
-                .Where(p => p.Id >= faixaInicial && p.Id <= faixaFinal)
-                .ToList();
-        }
-
     }
 }

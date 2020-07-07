@@ -38,7 +38,7 @@
                required />
       </div>
       <div style="width:04%;">
-        <button class="btn btn-primary mb-2" style="margin-right:4px;" (click)="consultarFaturamento()" [disabled]="ativar_spinner">
+        <button class="btn btn-primary mb-2" style="margin-right:4px;" (click)="consultarFaturamento(0)" [disabled]="ativar_spinner">
           <span class="spinner-border spinner-border-sm" *ngIf="ativar_spinner"></span>
           Pesquisar
         </button>
@@ -55,17 +55,17 @@
           <thead>
             <tr>
               <th style="width:10%; height:10%; text-align: center">PDV</th>
-              <th style="width:30%; height:10%; text-align: center">Data compra</th>
-              <th style="width:30%; height:10%; text-align: center">Data entrega</th>
-              <th style="width:30%; height:10%; text-align: center">Preço</th>
+              <th style="width:35%; height:10%; text-align: center">Data compra</th>
+              <th style="width:35%; height:10%; text-align: center">Data entrega</th>
+              <th style="width:20%; height:10%; text-align: left">Preço</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let p of pedidoLista">
               <td style="width:10%; height:10%; text-align: center">{{p.id}} </td>
-              <td style="width:30%; height:10%; text-align: center">{{p.dataPedido}} </td>
-              <td style="width:30%; height:10%; text-align: center">{{p.dataPrevisaoEntrega}} </td>
-              <td style="width:30%; height:10%; text-align: center">{{p.preco}} </td>
+              <td style="width:35%; height:10%; text-align: center">{{p.dataPedido}} </td>
+              <td style="width:35%; height:10%; text-align: center">{{p.dataPrevisaoEntrega}} </td>
+              <td style="width:20%; height:10%; text-align: left">{{p.preco}} </td>
             </tr>
           </tbody>
         </table>
@@ -74,12 +74,12 @@
       <div class="col-md-3">
         <div class="row">
           <div class="card" style="width:100%">
-            <div class="card-header">Resumo</div>
-            <div class="card-body">
+            <div class="card-header" style="background: #ff0000"><strong>Resumo</strong></div>
+            <div class="card-body" style="background:#efefef ">
               <table class="mb-4">
                 <tr>
                   <td style="width:50%"><strong>Total</strong></td>
-                  <td><strong>{{totalLista | number:'1.0-2'}}</strong></td>
+                  <td><strong>{{totalLista | currency:'BRL':true}}</strong></td>
                 </tr>
               </table>
             </div>
@@ -87,4 +87,11 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
+  <nav aria-label="...">
+    <ul class="pagination pagination-lg">
+      <li class="page-item" *ngFor="let t of indicePaginas; let i = index">
+        <a class="page-link page-item" (click)="consultarFaturamento(i)" >{{i + 1}}</a>
+      </li>
+    </ul>
+  </nav>

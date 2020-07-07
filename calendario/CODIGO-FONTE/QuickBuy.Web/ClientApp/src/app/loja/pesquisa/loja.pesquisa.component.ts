@@ -11,13 +11,36 @@ import { Router } from "@angular/router";
 
 export class LojaPesquisaComponent implements OnInit {
     public produtos: Produto[];
+    public indicePaginas;
 
     ngOnInit(): void {
-        
+
     }
 
     constructor(private produtoServico: ProdutoServico, private router: Router) {
-        this.produtoServico.obterTodosProdutos()
+        this.numeroDePaginas();
+        this.paginacao(0);
+
+    }
+
+    public abrirProduto(produto: Produto) {
+        sessionStorage.setItem('produtoDetalhe', JSON.stringify(produto));
+        this.router.navigate(['/loja-produto']);
+
+    }
+    public numeroDePaginas() {
+        this.produtoServico.obterNumeroElementos()
+            .subscribe(
+                total => {
+                    this.indicePaginas = new Array(total); 
+                },
+                e => {
+                    console.log(e.error);
+                });
+    }
+
+    public paginacao(pagAtual: number) {
+        this.produtoServico.obterProdutoPaginacao(pagAtual)
             .subscribe(
                 produtos => {
                     this.produtos = produtos
@@ -25,12 +48,6 @@ export class LojaPesquisaComponent implements OnInit {
                 e => {
                     console.log(e.error);
                 });
-    }
-
-    public abrirProduto(produto: Produto) {
-        sessionStorage.setItem('produtoDetalhe', JSON.stringify(produto));
-        this.router.navigate(['/loja-produto']);
-
     }
 
 }
